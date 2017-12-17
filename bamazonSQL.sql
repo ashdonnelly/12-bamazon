@@ -13,28 +13,28 @@ CREATE TABLE products(
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Fluffy Slippers", "Clothing", 24, 99);
+VALUES ("Fluffy Slippers", "Clothing", 23.75, 99);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Calvin and Hobbes Set", "Books", 55, 159);
+VALUES ("Calvin and Hobbes Set", "Books", 59.99, 159);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Emerald Earrings", "Jewelry", 600, 32);
+VALUES ("Emerald Earrings", "Jewelry", 599.99, 32);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Opal Necklace", "Jewelry", 900, 54);
+VALUES ("Opal Necklace", "Jewelry", 899.99, 54);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Jade Scuplture", "Antiques", 13987, 8);
+VALUES ("Jade Scuplture", "Antiques", 13986.99, 8);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Chinese Calligraphy Scroll", "Antiques", 175525, 1);
+VALUES ("Chinese Calligraphy Scroll", "Antiques", 175524.99, 1);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Haunted Doll", "Antiques", 1783, 11);
+VALUES ("Haunted Doll", "Antiques", 1782.99, 11);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Batman Coloring Book", "Toys and Games", 12, 76);
+VALUES ("Batman Coloring Book", "Toys and Games", 7.99, 76);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Batman Crayons", "Toys and Games", 6, 127);
+VALUES ("Batman Crayons", "Toys and Games", 5.99, 127);
