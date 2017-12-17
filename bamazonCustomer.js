@@ -57,7 +57,7 @@ function start() {
       .then(function(userInput) {
         // get the information of the requested item and amount
         var requestedItem = userInput.itemOrdered;
-        var requestedQuantity = userInput.Number;
+        var requestedQuantity = userInput.orderQuantity;
 
         connection.query("SELECT * FROM products", {itemOrdered: userInput}, function(err, data) {
           if (err) throw err;
@@ -80,11 +80,10 @@ function start() {
               ],
               function(err) {
                 if (err) throw err;
-              console.log();
-              console.log("SUCCESS!")
-              console.log();
-              calculateTotal();
-              // calculateTotal();
+                console.log();
+                console.log("SUCCESS!")
+                console.log();
+                calculateTotal();
               }
             );
           } else {
