@@ -38,3 +38,6 @@ VALUES ("Batman Coloring Book", "Toys and Games", 12, 76);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Batman Crayons", "Toys and Games", 6, 127);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Garlic Bread Seasoning", "Food", 5, 114);

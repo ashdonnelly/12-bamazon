@@ -27,11 +27,13 @@ function start() {
   var orderQuantity;
   connection.query("SELECT * FROM products", function(err, data) {
     if (err) throw err;
+    // console.log('data = ' + JSON.stringify(data));
     inquirer
       .prompt([
         {
           name: "itemOrdered",
           type: "rawlist",
+          pageSize: 11,
           choices: function() {
             var choiceArray = [];
             for (var i = 0; i < data.length; i++) {
@@ -54,55 +56,68 @@ function start() {
           }
         }
       ])
-      .then(function(userInput) {
+      .then(function(answers) {
         // get the information of the requested item and amount
-        var requestedItem = userInput.itemOrdered;
-        var requestedQuantity = userInput.orderQuantity;
+        // var requestedItem = answers.itemOrdered;
+        var requestedItem;
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].product_name === answers.itemOrdered) {
+              requestedItem = data[i];
+            }
+          }
+        // var requestedQuantity = answers.orderQuantity;
 
-        connection.query("SELECT * FROM products", {itemOrdered: userInput}, function(err, data) {
-          if (err) throw err;
+        // determine if there is enough inventory
+        // connection.query("SELECT * FROM products WHERE product_name = " + requestedItem, function(err, res) {
+        //   if (err) throw err;
           
-          console.log("Chosen Item: " + requestedItem);
-          console.log("Order Quantity: " + requestedQuantity);
-          console.log("Stock Quantity: " + requestedItem.stock_quantity)
+          console.log("Chosen Item: " + answers.itemOrdered);
+          console.log("Order Quantity: " + answers.orderQuantity);
+
           // determine if there are enough in stock
-          if (requestedItem.stock_quantity <= parseInt(userInput.orderQuantity)) {
-            // stock level was high enough, so update db, let the user know, and start over
-            connection.query(
-              "UPDATE products SET ? WHERE ?",
-              [
-                {
-                  stock_quantity: stock_quantity
-                },
-                {
-                  id: requestedItem.id
-                }
-              ],
-              function(err) {
-                if (err) throw err;
-                console.log();
-                console.log("SUCCESS!")
-                console.log();
-                calculateTotal();
-              }
-            );
-          } else {
-            // inventory wasn't high enough, start over
-            console.log();
-            console.log("INSUFFICIENT INVENTORY!");
-            console.log();
-            start();
-          };
+            if (data.stock_quantity <= parseInt(answers.orderQuantity)) {
+              // stock level was high enough, so update db, let the user know, and start over
+              console.log();
+              console.log("SUCCESS!");
+              console.log();
+              calculateTotal();
+            } else {
+              // inventory wasn't high enough, start over
+              console.log();
+              console.log("INSUFFICIENT INVENTORY!");
+              console.log();
+              whatNext();
+            };
+          // };
         });
-      });    
-  });
-};
+        });
+      // });
+  };
 
 function calculateTotal() {
   // get total price; purchase quantity * item amount
-  var totalPrice = orderQuantity + requestedItem.price;
+  var totalPrice = requestedQuantity + requestedItem.price;
   console.log("Your total price is: $" + totalPrice + ". Thank you for using BAMAZON!");
-  console.log()
-  // ask if they have another purchase and start over; or thank and end
-  console.log()
+  whatNext();
+}
+
+function whatNext() {
+  inquirer
+    .prompt([
+      {
+        name: "nextStep",
+        type: "confirm",
+        message: "Would you like to shop again?"
+      },
+    ])
+  .then(function(chooseNext) {
+    // console.log(chooseNext.nextStep);
+    if (chooseNext.nextStep === true) {
+      start();
+    } else {
+      console.log();      
+      console.log("Goodbye! Thank you for using BAMAZON!");
+      connection.end();
+    }
+  })
 }
